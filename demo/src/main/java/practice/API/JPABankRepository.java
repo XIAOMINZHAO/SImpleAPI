@@ -11,19 +11,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface JPABankRepository extends JpaRepository<BankAccount, Long>{
-
+//
 	@Transactional
-	@Query(value = "SELECT balance FROM bank_account WHERE CUSTOMER_NAME  = :username", nativeQuery = true)
-	float findBalanceByUsername(@Param("username") String username);
-
-	@Transactional
-	@Query(value = "SELECT * FROM bank_account WHERE CUSTOMER_NAME  = :username", nativeQuery = true)
-	BankAccount findByUser(@Param("username") String username);
-
-	@Transactional
-	@Modifying
-	@Query(value = "DELETE FROM bank_account WHERE ACCOUNT_NUMBER  = :accountNumber", nativeQuery = true)
-	Integer deleteUserByaccountNumber(@Param("accountNumber") Long accountNumber);
+	@Query(value = "SELECT balance FROM bank_account WHERE ACCOUNT_NUMBER  = :accountNumber", nativeQuery = true)
+	float findBalanceById(@Param("accountNumber") Long accountNumber);
 
 	@Transactional
 	@Modifying

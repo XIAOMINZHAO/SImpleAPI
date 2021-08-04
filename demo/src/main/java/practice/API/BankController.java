@@ -1,6 +1,7 @@
 package practice.API;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +29,14 @@ public class BankController {
 		return JPAService.findAll();
 	}
 	
-	@GetMapping("/getBalance/{name}")
-	public float getBalance(@PathVariable("name") String username) {
-		return JPAService.findBalanceByUsername(username);
+	@GetMapping("/getBalance/{accountNumber}")
+	public float getBalance(@PathVariable("accountNumber") Long accountNumber) {
+		return JPAService.findBalanceById(accountNumber);
 		
 	}
-	@GetMapping("/getAccounts/{name}")
-	public BankAccount getAccount(@PathVariable("name") String name) {
-		return JPAService.findByUser(name);
+	@GetMapping("/getAccounts/{accountNumber}")
+	public Optional<BankAccount> getAccount(@PathVariable("accountNumber") Long accountNumber) {
+		return JPAService.findById(accountNumber);
 	}
 	
 	@PostMapping("/addUser/{name}/{phoneNumber}")
@@ -48,8 +49,8 @@ public class BankController {
 	}
 	
 	@DeleteMapping("/deleteUser/{accountNumber}")
-	public Integer deleteUser(@PathVariable("accountNumber") Long accountNumber) {
-		return JPAService.deleteUserByaccountNumber(accountNumber);
+	public void deleteUser(@PathVariable("accountNumber") Long accountNumber) {
+		JPAService.deleteById(accountNumber);
 	}
 	
 	@PutMapping("/updateName/{accountNumber}/{newName}")
